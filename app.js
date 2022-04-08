@@ -27,4 +27,5 @@ const define = word => {
  });
 }
 
-define('livestock');
+const words = process.argv.slice(2);
+words.forEach(define);
