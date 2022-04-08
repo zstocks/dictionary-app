@@ -3,10 +3,24 @@ const https = require('https');
 const http = require('http');
 
 // Function to get definition for input word
-const define = 
-// Request Data
-// https://dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${api.key}
+const define = word => {
+ // Request Data
+ const request = https.get(`https://dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${api.key}`, res => {
 
-// Parse Data
+   let dataStream = '';
+   res.on('data', chunk => {
+    dataStream += chunk;
+   });
 
-// Return Data
+   res.on('end', () => {
+    // Parse the data
+    const definition = JSON.parse(dataStream);
+
+    // Print the data
+    console.log(definition[0].shortdef[0]);
+   });
+
+ });
+}
+
+define('livestock');
